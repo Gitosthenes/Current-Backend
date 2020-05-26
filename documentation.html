@@ -1,0 +1,220 @@
+<h1>Base url: <a href="https://team3-chatapp-backend.herokuapp.com/">https://team3-chatapp-backend.herokuapp.com/</a></h1>
+<h2>Login and Registration API</h2>
+<p>All endpoints for these services are unauthenticated. /verify is not meant for API access via applications at this time.</p>
+<table border="2">
+<tbody>
+<tr>
+<td><strong>ENDPOINT<br /></strong></td>
+<td><strong>METHOD</strong></td>
+<td>&nbsp;<strong>HEADER</strong></td>
+<td><strong>REQUEST</strong></td>
+<td>&nbsp;<strong>REQUEST TYPE</strong></td>
+<td><strong>RESPONSE</strong></td>
+<td><strong>RESPONSE TYPE</strong></td>
+</tr>
+<tr>
+<td>/login</td>
+<td>post</td>
+<td>none</td>
+<td>email, password</td>
+<td>JSON</td>
+<td>
+<p>success: boolean,</p>
+<p>message: string,</p>
+<p>username: string,</p>
+<p>memberid: int,</p>
+<p>token: string</p>
+</td>
+<td>JSON</td>
+</tr>
+<tr>
+<td>/register</td>
+<td>post</td>
+<td>none</td>
+<td>
+<p>first, last, username, email, password</p>
+</td>
+<td>JSON</td>
+<td>
+<p>success: boolean</p>
+</td>
+<td>JSON</td>
+</tr>
+<tr>
+<td>/verify</td>
+<td>get</td>
+<td>none</td>
+<td>
+<p>account</p>
+</td>
+<td>N/A</td>
+<td>
+<p>verification confirmation page</p>
+</td>
+<td>HTML</td>
+</tr>
+</tbody>
+</table>
+<h2>Connections API</h2>
+<p>All endpoints for these services are authenticated and need a valid JWT. The base endpoint for all these services is "/connections".</p>
+<table border="2">
+<tbody>
+<tr>
+<td><strong>ENDPOINT<br /></strong></td>
+<td><strong>METHOD</strong></td>
+<td>&nbsp;<strong>HEADER</strong></td>
+<td><strong>REQUEST</strong></td>
+<td>&nbsp;<strong>REQUEST TYPE</strong></td>
+<td><strong>RESPONSE</strong></td>
+<td><strong>RESPONSE TYPE</strong></td>
+</tr>
+<tr>
+<td>/send</td>
+<td>post</td>
+<td>authentication: JWT</td>
+<td>
+<p>sender: int,</p>
+<p>receiver: int</p>
+</td>
+<td>JSON</td>
+<td>
+<p>success: boolean</p>
+</td>
+<td>JSON</td>
+</tr>
+<tr>
+<td>/confirm</td>
+<td>post</td>
+<td>authentication: JWT</td>
+<td>
+<p>sender: int,</p>
+<p>receiver: int,</p>
+<p>accepted: string "true/false"</p>
+</td>
+<td>JSON</td>
+<td>
+<p>success: boolean</p>
+</td>
+<td>JSON</td>
+</tr>
+<tr>
+<td>/get</td>
+<td>post</td>
+<td>authentication: JWT</td>
+<td>
+<p>memberid: int</p>
+</td>
+<td>JSON</td>
+<td>
+<p>connections: JSON Array of rows following format</p>
+<p>memberid: int, firstname: string, lastname: string, username: string, email: string, verified: int, sender: int</p>
+</td>
+<td>JSON</td>
+</tr>
+<tr>
+<td>/search</td>
+<td>post</td>
+<td>authentication: JWT</td>
+<td>
+<p>memberid: int,</p>
+<p>firstname: string,</p>
+<p>lastname: string</p>
+<p>AND/OR</p>
+<p>username: string</p>
+<p>AND/OR</p>
+<p>email: string</p>
+</td>
+<td>JSON</td>
+<td>
+<p>users: JSON Array of rows following format</p>
+<p>memberid: int, firstname: string, lastname: string, username: string, email: string, verified: int/null, sender: int</p>
+</td>
+<td>JSON</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<h2>Chat API</h2>
+<p>All endpoints for these services are authenticated and need a valid JWT. The base endpoint for all these services is "/chat".</p>
+<table border="2">
+<tbody>
+<tr>
+<td><strong>ENDPOINT<br /></strong></td>
+<td><strong>METHOD</strong></td>
+<td>&nbsp;<strong>HEADER</strong></td>
+<td><strong>REQUEST</strong></td>
+<td>&nbsp;<strong>REQUEST TYPE</strong></td>
+<td><strong>RESPONSE</strong></td>
+<td><strong>RESPONSE TYPE</strong></td>
+</tr>
+<tr>
+<td>/getchats</td>
+<td>post</td>
+<td>authentication: JWT</td>
+<td>memberid: int</td>
+<td>JSON</td>
+<td>
+<p>chats: JSON Array of rows following format</p>
+<p>chatid: int, name: string, description: string</p>
+</td>
+<td>JSON</td>
+</tr>
+<tr>
+<td>/create</td>
+<td>post</td>
+<td>authentication: JWT</td>
+<td>
+<p>memberid:int, chatname: string</p>
+<p>OPTIONAL: description: string</p>
+</td>
+<td>JSON</td>
+<td>
+<p>success: boolean, chatid: int</p>
+</td>
+<td>JSON</td>
+</tr>
+<tr>
+<td>/invite</td>
+<td>post</td>
+<td>authentication: JWT</td>
+<td>
+<p>sender: int, invitees: int[], chatid: int</p>
+</td>
+<td>JSON</td>
+<td>
+<p>success: boolean</p>
+</td>
+<td>JSON</td>
+</tr>
+<tr>
+<td>/getchatcontent</td>
+<td>post</td>
+<td>authentication: JWT</td>
+<td>
+<p>chatid: int</p>
+</td>
+<td>JSON</td>
+<td>
+<p>messages: JSON Array of rows following format</p>
+<p>username: string, memberid: int, message: string, timestamp: string</p>
+</td>
+<td>JSON</td>
+</tr>
+<tr>
+<td>/send</td>
+<td>post</td>
+<td>authentication: JWT</td>
+<td>
+<p>memberid: int, message: string, chatid: int</p>
+</td>
+<td>JSON</td>
+<td>
+<p>success: boolean</p>
+</td>
+<td>JSON</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2>Other APIs and Endpoints to be detailed below.</h2>
